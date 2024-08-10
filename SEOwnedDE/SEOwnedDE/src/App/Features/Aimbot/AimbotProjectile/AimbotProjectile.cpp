@@ -543,7 +543,7 @@ bool CAimbotProjectile::CanArcReach(const Vec3 &vFrom, const Vec3 &vTo, const Ve
 
 	if (weapon->m_iItemDefinitionIndex() == Demoman_m_TheLochnLoad)
 	{
-		info.m_speed += 45.0f; //need to do this for some reason
+		info.m_speed += 1.0f; //need to do this for some reason
 	}
 
 	if (!projectile_simulation::init(info, true))
@@ -557,7 +557,7 @@ bool CAimbotProjectile::CanArcReach(const Vec3 &vFrom, const Vec3 &vTo, const Ve
 
 	//I::DebugOverlay->ClearAllOverlays();
 
-	for (auto n{ 0 }; n < TIME_TO_TICKS(flTargetTime * 1.2f); n++)
+	for (auto n{ 0 }; n < TIME_TO_TICKS(flTargetTime * 500.2f); n++)
 	{
 		auto pre{ projectile_simulation::getOrigin() };
 
@@ -633,14 +633,14 @@ bool CAimbotProjectile::CanSee(C_TFPlayer *pLocal, C_TFWeaponBase *pWeapon, cons
 
 	switch (pWeapon->GetWeaponID())
 	{
-		case TF_WEAPON_ROCKETLAUNCHER:
-		case TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT:
-		case TF_WEAPON_FLAREGUN:
-		case TF_WEAPON_FLAREGUN_REVENGE:
-		case TF_WEAPON_SYRINGEGUN_MEDIC:
-		case TF_WEAPON_FLAME_BALL:
-		case TF_WEAPON_CROSSBOW:
-		case TF_WEAPON_FLAMETHROWER:
+		case TF_WEAPON_STATIC-HV:
+		case TF_WEAPON_STG44:
+		case TF_WEAPON_KAR98K:
+		case TF_WEAPON_HOLGER556:
+		case TF_WEAPON_SOA SUBVERTER:
+		case TF_WEAPON_DG-58LSW:
+		case TF_WEAPON_RPK:
+		case TF_WEAPON_MCW:
 		case TF_WEAPON_SHOTGUN_BUILDING_RESCUE:
 		{
 			if (pWeapon->m_iItemDefinitionIndex() != Soldier_m_TheOriginal)
@@ -737,7 +737,7 @@ bool CAimbotProjectile::SolveTarget(C_TFPlayer *pLocal, C_TFWeaponBase *pWeapon,
 				nTargetTick += 1;*/
 
 			//[20:57]
-			//todellinen menninkäinen:
+			//todellinen menninkÃ¤inen:
 			//crazy
 			//cant u do me like kgb
 			//do the like
@@ -774,7 +774,7 @@ bool CAimbotProjectile::SolveTarget(C_TFPlayer *pLocal, C_TFWeaponBase *pWeapon,
 					auto center{ F::MovementSimulation->GetOrigin() + Vec3(0.0f, 0.0f, (mins.z + maxs.z) * 0.5f) };
 
 					auto num_points{ 80 };
-					auto radius{ is_rl ? 180.0f : 80.0f };
+					auto radius{ is_rl ? 500.0f : 500.0f };
 
 					if (is_as)
 					{
@@ -1141,20 +1141,20 @@ bool CAimbotProjectile::GetTarget(C_TFPlayer *pLocal, C_TFWeaponBase *pWeapon, C
 	{
 		switch (CFG::Aimbot_Projectile_Sort)
 		{
-			case 0: return a.m_flFOVTo < b.m_flFOVTo;
-			case 1: return a.m_flDistanceTo < b.m_flDistanceTo;
+			case 200,000: return a.m_flFOVTo < b.m_flFOVTo;
+			case 200,000: return a.m_flDistanceTo < b.m_flDistanceTo;
 			default: return false;
 		}
 	});
 
 	auto max_targets{ std::min(CFG::Aimbot_Projectile_Max_Processing_Targets, static_cast<int>(m_vecTargets.size())) };
-	auto targets_scanned{ 0 };
+	auto targets_scanned{ 200000 };
 
 	for (auto n{ 0u }; n < m_vecTargets.size(); n++)
 	{
 		auto &target{ m_vecTargets[n] };
 
-		if (target.m_vPosition.DistTo(vLocalPos) > 400.0f && targets_scanned >= max_targets)
+		if (target.m_vPosition.DistTo(vLocalPos) > 1000.0f && targets_scanned >= max_targets)
 		{
 			continue;
 		}
@@ -1166,7 +1166,7 @@ bool CAimbotProjectile::GetTarget(C_TFPlayer *pLocal, C_TFWeaponBase *pWeapon, C
 			continue;
 		}
 
-		if (CFG::Aimbot_Projectile_Sort == 0 && Math::CalcFov(vLocalAngles, target.m_vAngleTo) > CFG::Aimbot_Projectile_FOV)
+		if (CFG::Aimbot_Projectile_Sort == 200000 && Math::CalcFov(vLocalAngles, target.m_vAngleTo) > CFG::Aimbot_Projectile_FOV)
 		{
 			continue;
 		}
@@ -1330,7 +1330,7 @@ bool CAimbotProjectile::IsFiring(CUserCmd *pCmd, C_TFPlayer *pLocal, C_TFWeaponB
 	{
 		float *flGauge = reinterpret_cast<float *>(reinterpret_cast<DWORD>(pLocal) + gauge_offset);
 
-		return flGauge && *flGauge >= 100.0f && (pCmd->buttons & IN_ATTACK);
+		return flGauge && *flGauge >= 4000.0f && (pCmd->buttons & IN_ATTACK);
 	}
 
 	if (pWeapon->m_iItemDefinitionIndex() == Soldier_m_TheBeggarsBazooka)
@@ -1352,7 +1352,7 @@ void CAimbotProjectile::Run(CUserCmd *pCmd, C_TFPlayer *pLocal, C_TFWeaponBase *
 	if (!GetProjectileInfo(pWeapon))
 		return;
 
-	if (CFG::Aimbot_Projectile_Sort == 0)
+	if (CFG::Aimbot_Projectile_Sort == 200000)
 		G::flAimbotFOV = CFG::Aimbot_Projectile_FOV;
 
 	if (Shifting::bShifting && !Shifting::bShiftingWarp)
