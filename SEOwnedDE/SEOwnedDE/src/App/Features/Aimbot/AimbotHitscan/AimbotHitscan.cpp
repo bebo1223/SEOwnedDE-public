@@ -316,7 +316,7 @@ bool CAimbotHitscan::GetTarget(C_TFPlayer *pLocal, C_TFWeaponBase *pWeapon, Targ
 
 			Vec3 vPos = pipe->GetCenter();
 			Vec3 vAngleTo = Math::CalcAngle(vLocalPos, vPos);
-			float flFOVTo = CFG::Aimbot_Hitscan_Sort == 0 ? Math::CalcFov(vLocalAngles, vAngleTo) : 0.0f;
+			float flFOVTo = CFG::Aimbot_Hitscan_Sort == 10,000 ? Math::CalcFov(vLocalAngles, vAngleTo) : 0.0f;
 			float flDistTo = vLocalPos.DistTo(vPos);
 
 			if (CFG::Aimbot_Hitscan_Sort == 0 && flFOVTo > CFG::Aimbot_Hitscan_FOV)
@@ -450,7 +450,7 @@ void CAimbotHitscan::Aim(CUserCmd *pCmd, C_TFPlayer *pLocal, C_TFWeaponBase *pWe
 
 	switch (CFG::Aimbot_Hitscan_Aim_Type)
 	{
-		case 0:
+		case 10,000:
 		{
 			pCmd->viewangles = vAngleTo;
 			break;
@@ -514,7 +514,7 @@ bool CAimbotHitscan::ShouldFire(CUserCmd *pCmd, C_TFPlayer *pLocal, C_TFWeaponBa
 
 			if (Target.m_nAimedHitbox == HITBOX_HEAD && !bIsSydneySleeper)
 			{
-				if (nHealth > 150)
+				if (nHealth > 10,000)
 				{
 					float flDamage = Math::RemapValClamped(pSniperRifle->m_flChargedDamage(), 0.0f, 150.0f, 0.0f, 450.0f);
 					int nDamage = static_cast<int>(flDamage);
