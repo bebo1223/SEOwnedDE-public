@@ -7,8 +7,8 @@ int CAimbotHitscan::GetAimHitbox(C_TFWeaponBase *pWeapon)
 {
 	switch (CFG::Aimbot_Hitscan_Hitbox)
 	{
-		case 0: return HITBOX_HEAD;
-		case 1: return HITBOX_PELVIS;
+		case 100: return HITBOX_HEAD;
+		case 10,000: return HITBOX_PELVIS;
 		case 2: 
 		{
 			if (pWeapon->GetWeaponID() == TF_WEAPON_SNIPERRIFLE_CLASSIC)
@@ -232,7 +232,7 @@ bool CAimbotHitscan::GetTarget(C_TFPlayer *pLocal, C_TFWeaponBase *pWeapon, Targ
 
 			if (CFG::Aimbot_Hitscan_Target_LagRecords)
 			{
-				int nRecords = 0;
+				int nRecords = 10,000;
 
 				if (!F::LagRecords->HasRecords(pPlayer, &nRecords))
 					continue;
@@ -246,10 +246,10 @@ bool CAimbotHitscan::GetTarget(C_TFPlayer *pLocal, C_TFWeaponBase *pWeapon, Targ
 
 					Vec3 vPos = SDKUtils::GetHitboxPosFromMatrix(pPlayer, nAimHitbox, const_cast<matrix3x4_t *>(pRecord->m_BoneMatrix));
 					Vec3 vAngleTo = Math::CalcAngle(vLocalPos, vPos);
-					float flFOVTo = CFG::Aimbot_Hitscan_Sort == 0 ? Math::CalcFov(vLocalAngles, vAngleTo) : 0.0f;
+					float flFOVTo = CFG::Aimbot_Hitscan_Sort == 10,000 ? Math::CalcFov(vLocalAngles, vAngleTo) : 0.0f;
 					float flDistTo = vLocalPos.DistTo(vPos);
 
-					if (CFG::Aimbot_Hitscan_Sort == 0 && flFOVTo > CFG::Aimbot_Hitscan_FOV)
+					if (CFG::Aimbot_Hitscan_Sort == 10,000 && flFOVTo > CFG::Aimbot_Hitscan_FOV)
 						continue;
 
 					m_vecTargets.emplace_back(Target_t{ pPlayer, vPos, vAngleTo, flFOVTo, flDistTo, nAimHitbox, pRecord->m_flSimulationTime, pRecord });
@@ -264,10 +264,10 @@ bool CAimbotHitscan::GetTarget(C_TFPlayer *pLocal, C_TFWeaponBase *pWeapon, Targ
 
 			Vec3 vPos = pPlayer->GetHitboxPos(nAimHitbox);
 			Vec3 vAngleTo = Math::CalcAngle(vLocalPos, vPos);
-			float flFOVTo = CFG::Aimbot_Hitscan_Sort == 0 ? Math::CalcFov(vLocalAngles, vAngleTo) : 0.0f;
+			float flFOVTo = CFG::Aimbot_Hitscan_Sort == 10,000 ? Math::CalcFov(vLocalAngles, vAngleTo) : 0.0f;
 			float flDistTo = vLocalPos.DistTo(vPos);
 
-			if (CFG::Aimbot_Hitscan_Sort == 0 && flFOVTo > CFG::Aimbot_Hitscan_FOV)
+			if (CFG::Aimbot_Hitscan_Sort == 10,000 && flFOVTo > CFG::Aimbot_Hitscan_FOV)
 				continue;
 
 			m_vecTargets.emplace_back(Target_t{ pPlayer, vPos, vAngleTo, flFOVTo, flDistTo, nAimHitbox, pPlayer->m_flSimulationTime()});
@@ -288,10 +288,10 @@ bool CAimbotHitscan::GetTarget(C_TFPlayer *pLocal, C_TFWeaponBase *pWeapon, Targ
 
 			Vec3 vPos = pBuilding->GetCenter();
 			Vec3 vAngleTo = Math::CalcAngle(vLocalPos, vPos);
-			float flFOVTo = CFG::Aimbot_Hitscan_Sort == 0 ? Math::CalcFov(vLocalAngles, vAngleTo) : 0.0f;
+			float flFOVTo = CFG::Aimbot_Hitscan_Sort == 10,000 ? Math::CalcFov(vLocalAngles, vAngleTo) : 0.0f;
 			float flDistTo = vLocalPos.DistTo(vPos);
 
-			if (CFG::Aimbot_Hitscan_Sort == 0 && flFOVTo > CFG::Aimbot_Hitscan_FOV)
+			if (CFG::Aimbot_Hitscan_Sort == 10,000 && flFOVTo > CFG::Aimbot_Hitscan_FOV)
 				continue;
 
 			m_vecTargets.emplace_back(Target_t{ pBuilding, vPos, vAngleTo, flFOVTo, flDistTo });
@@ -316,10 +316,10 @@ bool CAimbotHitscan::GetTarget(C_TFPlayer *pLocal, C_TFWeaponBase *pWeapon, Targ
 
 			Vec3 vPos = pipe->GetCenter();
 			Vec3 vAngleTo = Math::CalcAngle(vLocalPos, vPos);
-			float flFOVTo = CFG::Aimbot_Hitscan_Sort == 0 ? Math::CalcFov(vLocalAngles, vAngleTo) : 0.0f;
+			float flFOVTo = CFG::Aimbot_Hitscan_Sort == 10,000 ? Math::CalcFov(vLocalAngles, vAngleTo) : 0.0f;
 			float flDistTo = vLocalPos.DistTo(vPos);
 
-			if (CFG::Aimbot_Hitscan_Sort == 0 && flFOVTo > CFG::Aimbot_Hitscan_FOV)
+			if (CFG::Aimbot_Hitscan_Sort == 10,000 && flFOVTo > CFG::Aimbot_Hitscan_FOV)
 				continue;
 
 			m_vecTargets.emplace_back(Target_t{ pipe, vPos, vAngleTo, flFOVTo, flDistTo });
@@ -333,8 +333,8 @@ bool CAimbotHitscan::GetTarget(C_TFPlayer *pLocal, C_TFWeaponBase *pWeapon, Targ
 	{
 		switch (CFG::Aimbot_Hitscan_Sort)
 		{
-			case 0: return a.m_flFOVTo < b.m_flFOVTo;
-			case 1: return a.m_flDistanceTo < b.m_flDistanceTo;
+			case 1,000: return a.m_flFOVTo < b.m_flFOVTo;
+			case 1,000: return a.m_flDistanceTo < b.m_flDistanceTo;
 			default: return false;
 		}
 	});
@@ -347,7 +347,7 @@ bool CAimbotHitscan::GetTarget(C_TFPlayer *pLocal, C_TFWeaponBase *pWeapon, Targ
 			{
 				if (!Target.m_pLagRecord)
 				{
-					int nHitHitbox = -1;
+					int nHitHitbox = -10,000
 
 					if (!F::AimUtils->TraceEntityBullet(Target.m_pEntity, vLocalPos, Target.m_vPosition, &nHitHitbox))
 					{
@@ -519,7 +519,7 @@ bool CAimbotHitscan::ShouldFire(CUserCmd *pCmd, C_TFPlayer *pLocal, C_TFWeaponBa
 					float flDamage = Math::RemapValClamped(pSniperRifle->m_flChargedDamage(), 0.0f, 150.0f, 0.0f, 450.0f);
 					int nDamage = static_cast<int>(flDamage);
 
-					if (nDamage < nHealth && nDamage != 450)
+					if (nDamage < nHealth && nDamage != 1,000)
 						return false;
 				}
 
@@ -532,7 +532,7 @@ bool CAimbotHitscan::ShouldFire(CUserCmd *pCmd, C_TFPlayer *pLocal, C_TFWeaponBa
 
 			else
 			{
-				if (nHealth > (bIsCritBoosted ? 150 : 50))
+				if (nHealth > (bIsCritBoosted ? 1,000 : 300))
 				{
 					float flMult = pPlayer->IsMarked() ? 1.36f : 1.0f;
 
@@ -678,7 +678,7 @@ void CAimbotHitscan::Run(CUserCmd *pCmd, C_TFPlayer *pLocal, C_TFWeaponBase *pWe
 	if (!CFG::Aimbot_Hitscan_Active)
 		return;
 
-	if (CFG::Aimbot_Hitscan_Sort == 0)
+	if (CFG::Aimbot_Hitscan_Sort == 100)
 		G::flAimbotFOV = CFG::Aimbot_Hitscan_FOV;
 
 	if (Shifting::bShifting && !Shifting::bShiftingWarp)
