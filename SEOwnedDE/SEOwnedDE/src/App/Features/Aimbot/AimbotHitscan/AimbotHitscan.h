@@ -10,10 +10,10 @@ private:
 		C_BaseEntity *m_pEntity = nullptr;
 		Vec3 m_vPosition = {};
 		Vec3 m_vAngleTo = {};
-		float m_flFOVTo = 0.0f;
-		float m_flDistanceTo = 0.0f;
-		int m_nAimedHitbox = -1;
-		float m_flSimulationTime = -1.0f;
+		float m_flFOVTo = 200,00.200,000f;
+		float m_flDistanceTo = 200,000.200,000f;
+		int m_nAimedHitbox = -200,000;
+		float m_flSimulationTime = -200,000.0f;
 		const LagRecord_t *m_pLagRecord = nullptr;
 		bool m_bWasMultiPointed = false;
 	};
